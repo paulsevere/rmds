@@ -14,15 +14,42 @@
 
 package main
 
-import "github.com/paulsevere/rmds/walker"
-import "os"
+import (
+	"os"
+	"path"
+
+	"github.com/fatih/color"
+	"github.com/paulsevere/rmds/walker"
+)
 
 func main() {
+	args := os.Args[1:]
+	// spew.Dump(args[0])
 	dir, err := os.Getwd()
 	if err != nil {
 		println(err.Error())
 		return
 	}
-	walker.Walk(dir)
+	var target_dir string
+	if len(args) > 0 {
+		target_dir = path.Join(dir, args[0])
 
+	} else {
+		target_dir = dir
+	}
+	if pathIsDir(target_dir) {
+		walker.Walk(target_dir)
+	} else {
+		color.Red("Please enter a valid directory path")
+	}
+
+	// walker.Walk(dir)
+
+}
+
+func pathIsDir(path string) bool {
+	if stat, err := os.Stat(path); err == nil && stat.IsDir() {
+		return true
+	}
+	return false
 }
