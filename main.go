@@ -15,9 +15,14 @@
 package main
 
 import "github.com/paulsevere/rmds/walker"
+import "os"
 
 func main() {
-	// cmd.Execute()
-	walker.Walk("/Users/paul/projects/envy-client")
+	dir, err := os.Getwd()
+	if err != nil {
+		println(err.Error())
+		return
+	}
+	walker.Walk(dir)
 
 }
