@@ -31,14 +31,19 @@ func main() {
 		return
 	}
 	var target_dir string
-	if len(args) > 0 {
-		target_dir = path.Join(dir, args[0])
+	var target_rm string
 
+	if len(args) == 1 {
+		target_dir = path.Join(dir, args[0])
+		target_rm = ".DS_Store"
+	} else if len(args) == 2 {
+		target_dir = path.Join(dir, args[1])
+		target_rm = args[0]
 	} else {
 		target_dir = dir
 	}
 	if pathIsDir(target_dir) {
-		walker.Walk(target_dir)
+		walker.Walk(target_rm, target_dir)
 	} else {
 		color.Red("Please enter a valid directory path")
 	}
