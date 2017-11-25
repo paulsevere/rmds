@@ -1,13 +1,17 @@
 # RMDS
+
 ##### A simple tool for recursively removing .DS_Store files
+
 #### Installation
-``` bash
+
+```bash
 go get -u github.com/paulsevere/rmds
 ```
 
 #### Usage
-``` bash
-rmds <path?>
+
+```bash
+rmds <directory/file name?> <path?>
 ```
 
 <div style="padding:0px 50px;">
