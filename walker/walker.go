@@ -10,9 +10,30 @@ import (
 
 var count = 0
 
-func Walk(path string) {
-	walk.Walk(path, walker)
+func Walk(target string, path string) {
+	walk.Walk(path, createWalker(target))
 	colorPrint(count)
+}
+
+func createWalker(target string) func(string, os.FileInfo, error) error {
+	return func(path string, info os.FileInfo, err error) error {
+		if info.Name() == target {
+			// spew.Dump(path)
+			delerr := os.Remove(path)
+			if delerr != nil {
+				return delerr
+
+			} else {
+				count++
+
+				// println("Removed DS_Store in " + path)
+			}
+
+		}
+		// spew.Dump(path, info.IsDir())
+		return err
+	}
+
 }
 
 func walker(path string, info os.FileInfo, err error) error {
